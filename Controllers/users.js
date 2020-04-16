@@ -25,7 +25,7 @@ exports.getDetails = async (request, response, next) => {
 		if(userData)
 			responseData = {statusCode: 200, success: "Data has been fetched successfully.", error: "", data: userData};
 		else
-			responseData = {statusCode: 404, success: "", reason: "No user found for the request."};
+			responseData = {statusCode: 404, success: "", reason: "No data found for the request."};
 	} else {
 		responseData = {statusCode: 403, success: "", error: "Invalid request parameter."};
 	}

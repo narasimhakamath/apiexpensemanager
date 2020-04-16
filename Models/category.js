@@ -6,6 +6,11 @@ const categorySchema = mongoose.Schema({
 });
 
 
+categorySchema.statics.findAll = async function() {
+	categoryData = await this.find({}).exec();
+	return categoryData;
+}
+
 
 
 

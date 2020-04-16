@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Importing routes.
-const userRoutes = require("./Routes/stores");
+const userRoutes = require("./Routes/users");
 
 // Database Connection.
 mongoose.connect('mongodb://localhost:27017/expensemanager', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});

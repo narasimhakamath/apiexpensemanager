@@ -5,10 +5,10 @@ const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
-const StoresController = require("./../Controllers/stores");
+const UsersController = require("./../Controllers/users");
 
 // POST API to create a new user.
-router.post("/createUser", StoresController.createUser);
+router.post("/createUser", UsersController.createUser);
 
 
 

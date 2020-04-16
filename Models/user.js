@@ -93,4 +93,19 @@ userSchema.statics.validateUserFields = async function(requestBody) {
 	return "";
 }
 
+userSchema.statics.getDetails = async function(userID) {
+	userData = {};
+
+	if(userID) {
+		const isValidID = custom.isValidObjectID(userID);
+		if(isValidID)
+			userData = await this.findOne({_id: userID}).exec();
+	}
+
+	return userData;
+}
+
+
+
+
 module.exports = mongoose.model("User", userSchema);

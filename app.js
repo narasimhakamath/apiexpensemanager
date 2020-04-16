@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Importing routes.
-// const userRoutes = require("./Routes/stores");
+const userRoutes = require("./Routes/stores");
 
 // Database Connection.
 mongoose.connect('mongodb://localhost:27017/expensemanager', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
@@ -28,7 +28,7 @@ app.use((request, response, next) => {
 
 
 // Using routes here.
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((request, response, next) => {
 	const error = new Error("Request to this API endpoint does not exist.");

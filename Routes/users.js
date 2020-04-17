@@ -13,6 +13,9 @@ router.post("/createUser", UsersController.createUser);
 // GET API to get the details of a user by ID.
 router.get("/getDetails/:userID", UsersController.getDetails);
 
+// POST API to login a user and get the JSON Web Token.
+router.post("/loginUser", UsersController.loginUser);
+
 
 
 

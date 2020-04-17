@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const User = require("./../Models/user");
 
@@ -16,7 +17,6 @@ exports.createUser = async (request, response, next) => {
 	response.status(responseData.statusCode).json(responseData);
 }
 
-
 exports.getDetails = async (request, response, next) => {
 	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
 
@@ -28,6 +28,22 @@ exports.getDetails = async (request, response, next) => {
 			responseData = {statusCode: 404, success: "", reason: "No data found for the request."};
 	} else {
 		responseData = {statusCode: 403, success: "", error: "Invalid request parameter."};
+	}
+
+	response.status(responseData.statusCode).json(responseData);
+}
+
+exports.loginUser = async (request, response, next) => {
+	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
+
+	if(request['body']) {
+		responseData = await User.loginUser(request['body']);
+		if(responseData['success']) {
+			const token = jwt.sign({userName: responseData['data']['userName'], userID: responseData['data']['_id']}, "secret", {expiresIn: 5000});
+			responseData['token'] = token;
+		}
+	} else {
+		responseData = {...responseData, error: "The request can not be processed."};
 	}
 
 	response.status(responseData.statusCode).json(responseData);

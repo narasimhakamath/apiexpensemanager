@@ -105,6 +105,29 @@ userSchema.statics.getDetails = async function(userID) {
 	return userData;
 }
 
+userSchema.statics.loginUser = async function(requestBody) {
+	let responseData = {statusCode: 408, success: "", error: "The request timed out. Please try again."};
+
+	if(requestBody) {
+		if(requestBody['userName'] && requestBody['password']) {
+			const userData = await this.findOne({userName: requestBody['userName']}).exec();
+			if(userData) {
+				const isPasswordMatch = await custom.comparePasswords(requestBody['password'], userData['password']);
+				if(isPasswordMatch)
+					responseData = {statusCode: 201, success: "User details feched successfully.", error: "", data: userData};
+				else
+					responseData = {statusCode: 401, success: "", error: "The entered password is incorrect"};
+			} else {
+				responseData = {statusCode: 401, success: "", error: "The entered username does not exist."};
+			}
+		}
+	} else {
+		responseData = {statusCode: 405, success: "", error: "Something went wrong. Try again later."};
+	}
+
+	return responseData;
+}
+
 
 
 

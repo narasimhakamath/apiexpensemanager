@@ -15,3 +15,16 @@ exports.getAllCategories = async (request, response, next) => {
 
 	response.status(responseData.statusCode).json(responseData);
 }
+
+exports.createCategory = async (request, response, next) => {
+	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
+
+	if(request['body']) {
+		responseData = await Category.createCategory(request['body']);
+
+	} else {
+		responseData = {statusCode: 403, success: "", error: "The request could not be processed."};
+	}
+
+	response.status(responseData.statusCode).json(responseData);
+}

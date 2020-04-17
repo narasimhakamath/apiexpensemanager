@@ -10,7 +10,8 @@ const CategoriesController = require("./../Controllers/categories");
 // GET API to get all the categories.
 router.get("/getAllCategories", CategoriesController.getAllCategories);
 
-
+// POST API to create a new category.
+router.post("/createCategory", CategoriesController.createCategory);
 
 
 module.exports = router;

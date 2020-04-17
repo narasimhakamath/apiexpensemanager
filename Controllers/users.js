@@ -39,7 +39,7 @@ exports.loginUser = async (request, response, next) => {
 	if(request['body']) {
 		responseData = await User.loginUser(request['body']);
 		if(responseData['success']) {
-			const token = jwt.sign({userName: responseData['data']['userName'], userID: responseData['data']['_id']}, "secret", {expiresIn: 5000});
+			const token = jwt.sign({userName: responseData['data']['userName'], userID: responseData['data']['_id']}, "secret", {expiresIn: "12h"});
 			responseData['token'] = token;
 		}
 	} else {

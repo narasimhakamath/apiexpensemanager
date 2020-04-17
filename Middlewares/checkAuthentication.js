@@ -7,7 +7,6 @@ module.exports = (request, response, next) => {
 		const token = request['headers']['authorization'];
 		try {
 			const decodedData = jwt.verify(token, "secret", null);
-			console.log(decodedData);
 			request['userData'] = decodedData;
 			next();
 		} catch(error) {

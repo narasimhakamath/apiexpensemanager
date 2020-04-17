@@ -3,10 +3,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const checkAuthentication = require("../Middlewares/checkAuthentication");
-
 const router = express.Router();
 
+const checkAuthentication = require("../Middlewares/checkAuthentication");
 const CategoriesController = require("./../Controllers/categories");
 
 // GET API to get all the categories.

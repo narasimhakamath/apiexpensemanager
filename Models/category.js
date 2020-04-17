@@ -5,32 +5,54 @@ const categorySchema = mongoose.Schema({
 	name: {type: String, required: true, unique: true}
 });
 
+const Mapping = require("./mapping");
+const custom = require("./../custom");
+
 
 categorySchema.statics.findAll = async function() {
 	categoryData = await this.find({}).exec();
 	return categoryData;
 }
 
-categorySchema.statics.createCategory = async function(requestBody) {
+categorySchema.statics.createCategory = async function(requestBody, userID) {
 	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
+	if(requestBody) {
 
-	if(requestBody['name']) {
-		requestBody['_id'] = new mongoose.Types.ObjectId();
-		const iData = new this(requestBody);
+		if(requestBody['name']) {
+			const categoryName = await custom.formatText(requestBody['name']);
 
-		try {
-			const categoryData = await iData.save();
-			responseData = {statusCode: 201, success: "Category has been created successfully.", error: "", data: categoryData};
-		} catch(mongoError) {
-			responseData = {statusCode: 500, success: "", error: mongoError};
+			const categoryData = await this.findByName(categoryName);
+			if(!categoryData) {
+				requestBody['name'] = categoryName;
+				requestBody['_id'] = new mongoose.Types.ObjectId();
+				const iData = new this(requestBody);
+
+				try {
+					const categoryData = await iData.save();
+					if(categoryData)
+						await Mapping.updateMapping("category", categoryData['_id'], userID);
+
+					responseData = {statusCode: 201, success: "The category has been saved successfully.", error: "", data: categoryData};
+				} catch(mongoError) {
+					responseData = {statusCode: 500, success: "", error: mongoError};
+				}
+			} else {
+				await Mapping.updateMapping("category", categoryData['_id'], userID);
+			}
+		} else {
+			responseData = {statusCode: 403, success: "", error: "The entered category name is invalid."};
 		}
 	} else {
-		responseData = {statusCode: 403, success: "", error: "Invalid request parameters."};
+		responseData = {statusCode: 403, success: "", error: "Could not process the request due to invalid request parameters."};
 	}
 
 	return responseData;
 }
 
+categorySchema.statics.findByName = async function(categoryName) {
+	const categoryData = await this.findOne({name: categoryName}).exec();
+	return categoryData;
+}
 
 
 module.exports = mongoose.model("Category", categorySchema);

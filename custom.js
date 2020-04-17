@@ -31,3 +31,15 @@ exports.comparePasswords = async (password, hashedPassword) => {
 		return await bcrypt.compare(password, hashedPassword);
 	return false;
 }
+
+// Function to trim unnecessary white spaces and capitalize the first alphabet of every word in a text.
+exports.formatText = async(textData) => {
+	let returnString = "";
+	if(textData != "") {
+		returnString = textData.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+		returnString = returnString.trim();
+		returnString = returnString.replace(/ +(?= )/g,'');
+	}
+
+	return returnString;
+}

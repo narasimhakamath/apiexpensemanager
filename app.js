@@ -8,6 +8,7 @@ const app = express();
 // Importing routes.
 const userRoutes = require("./Routes/users");
 const categoryRoutes = require("./Routes/categories");
+const mappingRoutes = require("./Routes/mappings");
 
 // Database Connection.
 mongoose.connect('mongodb://localhost:27017/expensemanager', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
@@ -31,6 +32,7 @@ app.use((request, response, next) => {
 // Using routes here.
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/mappings", mappingRoutes);
 
 
 app.use((request, response, next) => {

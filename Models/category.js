@@ -38,6 +38,7 @@ categorySchema.statics.createCategory = async function(requestBody, userID) {
 				}
 			} else {
 				await Mapping.updateMapping("category", categoryData['_id'], userID);
+				responseData = {statusCode: 201, success: "The category has been saved successfully.", error: "", data: categoryData};
 			}
 		} else {
 			responseData = {statusCode: 403, success: "", error: "The entered category name is invalid."};

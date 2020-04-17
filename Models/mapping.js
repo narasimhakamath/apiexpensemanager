@@ -13,13 +13,11 @@ mappingSchema.statics.updateMapping = async function(entity, entityID, userID) {
 
 	if(mappingData) {
 		if(!mappingData['isEnabled'])
-			await mappingData.findByIdAndUpdate(mappingData['_id'], {isEnabled: true}).exec();
+			await this.findByIdAndUpdate(mappingData['_id'], {isEnabled: true}).exec();
 	} else {
 		let iData = {_id: new mongoose.Types.ObjectId(), entity: entity, entityID: entityID, userID: userID, isEnabled: true};
 		iData = new this(iData);
-		console.log(iData);
-		let data = await iData.save();
-		console.log(data);
+		await iData.save();
 	}
 }
 

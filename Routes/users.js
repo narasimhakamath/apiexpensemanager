@@ -19,6 +19,4 @@ router.get("/getDetails/:userID", checkAuthentication, UsersController.getDetail
 router.post("/loginUser", UsersController.loginUser);
 
 
-
-
 module.exports = router;

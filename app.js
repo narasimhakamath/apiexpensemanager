@@ -8,6 +8,7 @@ const app = express();
 // Importing routes.
 const userRoutes = require("./Routes/users");
 const categoryRoutes = require("./Routes/categories");
+const modeRoutes = require("./Routes/modes");
 const mappingRoutes = require("./Routes/mappings");
 
 // Database Connection.
@@ -32,6 +33,7 @@ app.use((request, response, next) => {
 // Using routes here.
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/modes", modeRoutes);
 app.use("/api/mappings", mappingRoutes);
 
 

@@ -42,6 +42,10 @@ mappingSchema.statics.getEntitiesForUser = async function(entity, userID) {
 	return mappingData;
 }
 
+mappingSchema.statics.checkMappingExists = async function(entity, entityID, userID) {
+	mappingData = await this.findOne({entity: entity, entityID: entityID, userID: userID}).exec();
+	return mappingData;
+}
 
 
 module.exports = mongoose.model("Mapping", mappingSchema);

@@ -11,5 +11,9 @@ const ExpensesController = require("./../Controllers/expenses");
 // POST API to create a new expense.
 router.post("/createExpense", checkAuthentication, ExpensesController.createExpense);
 
+// POST API to remove an expense.
+router.post("/updateExpense/:expenseID", checkAuthentication, ExpensesController.updateExpense);
+
+
 
 module.exports = router;

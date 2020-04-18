@@ -15,3 +15,9 @@ exports.createExpense = async (request, response, next) => {
 
 	response.status(responseData.statusCode).json(responseData);
 }
+
+exports.updateExpense = async (request, response, next) => {
+	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
+	responseData = await Expense.updateExpense(request['params']['expenseID'], request['body'], request['userData']['userID']);
+	response.status(responseData.statusCode).json(responseData);
+}

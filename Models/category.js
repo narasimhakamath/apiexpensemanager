@@ -55,5 +55,37 @@ categorySchema.statics.findByName = async function(categoryName) {
 	return categoryData;
 }
 
+categorySchema.statics.removeCategory = async function(categoryID, userID) {
+	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
+
+	if(categoryID) {
+		const categoryData = await this.findOne({_id: categoryID});
+		if(categoryData) {
+			const isRemoved = await Mapping.removeMapping("category", categoryID, userID);
+			if(isRemoved)
+				responseData = {statusCode: 201, success: "The category has been removed successfully.", error: ""};
+			else
+				responseData = {statusCode: 403, success: "", error: "The request could not be processed. Please try again."};
+		} else {
+			responseData = {statusCode: 403, success: "", error: "The category does not exist."};
+		}
+	} else {
+		responseData = {statusCode: 403, success: "", error: "Could not process the request due to invalid request parameters."};
+	}
+
+	return responseData;
+}
+
+categorySchema.statics.findNameByID = async function(categoryID) {
+	categoryName = "";
+
+	if(categoryID) {
+		categoryData = await this.findOne({_id: categoryID}).select('name').exec();
+		categoryName = categoryData['name'];
+	}
+
+	return categoryName;
+}
+
 
 module.exports = mongoose.model("Category", categorySchema);

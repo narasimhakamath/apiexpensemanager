@@ -14,5 +14,9 @@ router.get("/getAllCategories", checkAuthentication, CategoriesController.getAll
 // POST API to create a new category.
 router.post("/createCategory", checkAuthentication, CategoriesController.createCategory);
 
+// POST API to delete a category mapping.
+router.post("/removeCategory/:categoryID", checkAuthentication, CategoriesController.removeCategory);
+
+router.get("/getCategories", checkAuthentication, CategoriesController.getCategoriesForUser);
 
 module.exports = router;

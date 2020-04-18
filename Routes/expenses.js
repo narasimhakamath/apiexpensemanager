@@ -1,16 +1,15 @@
+
+const express = require("express");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const expenseSchema = mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
-	userID: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
-	categoryID: {type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true},
-	modeID: {type: mongoose.Schema.Types.ObjectId, ref: "Mode", required: true},
-	amount: {type: Number, required: true, default: 0.00}
-});
+const router = express.Router();
 
-const Mapping = require("./mapping");
-const custom = require("./../custom");
+const checkAuthentication = require("../Middlewares/checkAuthentication");
+const ExpensesController = require("./../Controllers/expenses");
+
+// POST API to create a new expense.
+router.post("/createExpense", checkAuthentication, ExpensesController.createExpense);
 
 
-
-module.exports = mongoose.model("Expense", expenseSchema);
+module.exports = router;

@@ -17,4 +17,6 @@ router.post("/updateExpense/:expenseID", checkAuthentication, ExpensesController
 // GET API to get the details of an expense by ID.
 router.get("/getDetails/:expenseID", checkAuthentication, ExpensesController.getDetailsByID);
 
+router.get("/getExpenses", checkAuthentication, ExpensesController.getExpenses);
+
 module.exports = router;

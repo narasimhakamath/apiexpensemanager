@@ -8,6 +8,7 @@ const expenseSchema = mongoose.Schema({
 	amount: {type: Number, required: true, default: 0.00},
 	comment: {type: String, required: false},
 	isActive: {type: Boolean, default: true},
+	createdAt: {type: Date, default: Date.now},
 	__v: {type: Number, select: false}
 });
 
@@ -134,6 +135,10 @@ expenseSchema.statics.findByID = async function(expenseID, userID, queryFields) 
 	return expenseData;
 }
 
+expenseSchema.statics.getExpenses = async function(limitTo, pageNumber, sortBy, userID) {
+	const expensesData = await this.find({userID: userID}).limit(limitTo).skip((pageNumber - 1) * limitTo).sort({createdAt: sortBy}).lean().exec();
+	return expensesData;
+}
 
 
 module.exports = mongoose.model("Expense", expenseSchema);

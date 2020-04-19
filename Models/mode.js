@@ -50,8 +50,13 @@ modeSchema.statics.createMode = async function(requestBody, userID) {
 	return responseData;
 }
 
-modeSchema.statics.findByName = async function(modeName) {
-	const modeData = await this.findOne({name: modeName}).exec();
+modeSchema.statics.findByName = async function(modeName, queryFields) {
+	const modeData = await this.findOne({name: modeName}).select(queryFields).lean().exec();
+	return modeData;
+}
+
+modeSchema.statics.findByID = async function(modeID) {
+	const modeData = await this.findOne({_id: modeID}).lean();
 	return modeData;
 }
 

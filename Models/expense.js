@@ -7,7 +7,8 @@ const expenseSchema = mongoose.Schema({
 	modeID: {type: mongoose.Schema.Types.ObjectId, ref: "Mode", required: true},
 	amount: {type: Number, required: true, default: 0.00},
 	comment: {type: String, required: false},
-	isActive: {type: Boolean, default: true}
+	isActive: {type: Boolean, default: true},
+	__v: {type: Number, select: false}
 });
 
 const Category = require("./category");
@@ -127,6 +128,12 @@ expenseSchema.statics.updateExpense = async function(expenseID, requestBody, use
 
 	return responseData;
 }
+
+expenseSchema.statics.findByID = async function(expenseID, userID, queryFields) {
+	const expenseData = await this.findOne({_id: expenseID, userID: userID}).select(queryFields).lean();
+	return expenseData;
+}
+
 
 
 module.exports = mongoose.model("Expense", expenseSchema);

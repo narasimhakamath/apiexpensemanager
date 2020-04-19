@@ -55,6 +55,11 @@ categorySchema.statics.findByName = async function(categoryName) {
 	return categoryData;
 }
 
+categorySchema.statics.findByID = async function(categoryID, queryFields) {
+	const categoryData = await this.findOne({_id: categoryID}).select(queryFields).lean().exec();
+	return categoryData;
+}
+
 categorySchema.statics.removeCategory = async function(categoryID, userID) {
 	let responseData = {statusCode: 500, success: "", error: "Invalid request."};
 

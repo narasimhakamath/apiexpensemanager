@@ -14,6 +14,7 @@ router.post("/createExpense", checkAuthentication, ExpensesController.createExpe
 // POST API to remove an expense.
 router.post("/updateExpense/:expenseID", checkAuthentication, ExpensesController.updateExpense);
 
-
+// GET API to get the details of an expense by ID.
+router.get("/getDetails/:expenseID", checkAuthentication, ExpensesController.getDetailsByID);
 
 module.exports = router;
